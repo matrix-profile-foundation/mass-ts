@@ -23,10 +23,13 @@ Example Usage
 -------------
 ```python
 
+import numpy as np
+import mass_ts as mts
+
 ts = np.loadtxt('ts.txt')
 query = np.loadtxt('query.txt')
 
-distances = mass_ts.mass2(ts, query)
+distances = mts.mass2(ts, query)
 ```
 
 Citations
