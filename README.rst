@@ -20,7 +20,6 @@ MASS (Mueen's Algorithm for Similarity Search) Implementations
 
 
 * Free software: Apache Software License 2.0
-* Documentation: https://mass-ts.readthedocs.io.
 
 
 Features
