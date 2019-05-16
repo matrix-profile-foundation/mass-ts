@@ -1,19 +1,9 @@
-====
 MASS
-====
+----
 
-
-.. image:: https://img.shields.io/pypi/v/mass_ts.svg
-        :target: https://pypi.python.org/pypi/mass_ts
-
-.. image:: https://img.shields.io/travis/tylerwmarrs/mass_ts.svg
-        :target: https://travis-ci.org/tylerwmarrs/mass_ts
-
-.. image:: https://readthedocs.org/projects/mass-ts/badge/?version=latest
-        :target: https://mass-ts.readthedocs.io/en/latest/?badge=latest
-        :alt: Documentation Status
-
-
+[<img src="https://img.shields.io/pypi/v/mass_ts.svg">](https://pypi.python.org/pypi/mass_ts)
+[<img src="https://img.shields.io/travis/tylerwmarrs/mass_ts.svg">](https://travis-ci.org/tylerwmarrs/mass_ts)
+[<img src="https://readthedocs.org/projects/mass-ts/badge/?version=latest">](https://mass-ts.readthedocs.io/en/latest/?badge=latest)
 
 
 MASS (Mueen's Algorithm for Similarity Search) Implementations
@@ -31,14 +21,13 @@ Features
 
 Example Usage
 -------------
-.. code:: python
-    import numpy as np
-    import mass_ts
+```python
 
-    ts = np.loadtxt('ts.txt')
-    query = np.loadtxt('query.txt')
+ts = np.loadtxt('ts.txt')
+query = np.loadtxt('query.txt')
 
-    distances = mass_ts.mass2(ts, query)
+distances = mass_ts.mass2(ts, query)
+```
 
 Citations
 ---------
