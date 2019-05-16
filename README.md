@@ -2,7 +2,7 @@ MASS
 ----
 
 [<img src="https://img.shields.io/pypi/v/mass_ts.svg">](https://pypi.python.org/pypi/mass_ts)
-[<img src="https://img.shields.io/travis/tylerwmarrs/mass_ts.svg">](https://travis-ci.org/tylerwmarrs/mass_ts)
+[<img src="https://img.shields.io/travis/tylerwmarrs/mass-ts.svg">](https://travis-ci.org/tylerwmarrs/mass-ts)
 [<img src="https://readthedocs.org/projects/mass-ts/badge/?version=latest">](https://mass-ts.readthedocs.io/en/latest/?badge=latest)
 
 
