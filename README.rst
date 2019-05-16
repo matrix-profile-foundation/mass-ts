@@ -26,12 +26,22 @@ MASS (Mueen's Algorithm for Similarity Search) Implementations
 Features
 --------
 
-* TODO
+* MASS
+* MASS2
+* MASS3 - TODO
 
-Credits
--------
+Example Usage
+-------------
+```python
+import numpy as np
+import mass_ts
 
-This package was created with Cookiecutter_ and the `audreyr/cookiecutter-pypackage`_ project template.
+ts = np.loadtxt('ts.txt')
+query = np.loadtxt('query.txt')
 
-.. _Cookiecutter: https://github.com/audreyr/cookiecutter
-.. _`audreyr/cookiecutter-pypackage`: https://github.com/audreyr/cookiecutter-pypackage
+distances = mass_ts.mass2(ts, query)
+```
+
+Citations
+---------
+Abdullah Mueen, Yan Zhu, Michael Yeh, Kaveh Kamgar, Krishnamurthy Viswanathan, Chetan Kumar Gupta and Eamonn Keogh (2015), The Fastest Similarity Search Algorithm for Time Series Subsequences under Euclidean Distance, URL: http://www.cs.unm.edu/~mueen/FastestSimilaritySearch.html
