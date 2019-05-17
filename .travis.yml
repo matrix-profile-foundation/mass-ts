@@ -1,18 +1,9 @@
 language: python
 python:
+- 3.7
 - 3.6
 - 3.5
 - 3.4
 - 2.7
 install: pip install -U tox-travis
 script: tox
-deploy:
-  provider: pypi
-  distributions: sdist bdist_wheel
-  user: tylerwmarrs
-  password:
-    secure: t9b2VfaHPJWr1gskArs/cuDXowZx0fGaYoD52FzAX0sCMtJbnil/Zny/7NNaDSZgd5Yi4B8p4MLp829Sp1knGshnM1sic+fW5P7JQCxUW+bMiBc8Be1Zqdc33+XOSRPW6612wBNV9E7b7cwhyzAo1a7tne8A95225FExikbqGGgkzfqGDP5BBXDowC81wm1i0WRJomYGegMLsg+BlvSS/ZV4bOLhDDyMuTUbhKL1d4nIvDyhdtxsT7K8mfcUOMEezpzM60pNodlBVebxwI9wtbNazxKNKJscuEUYBQ3SaG4tUTKRBkGwcIhIIqUtPW4nYKD2rJ4/iP99UFUZjzWdyO/J4wJHHE5hUMVIhdqMLzyaE3ho53wlleXmaS4vSpNRvlACll2hX7V643xzqipL1LnEPBkSFue8MXQ/ka03dDvulRGvNmMrRXu+1dcIXR48Qli/ECwgdE20K7q4G4fsudRz76rvgk78l6MejDblr9FZtMpOw8hIStKOrm9GuB1anyqavEbgWbHlayjABgHypZLNMJxWRIZ7/DPiQ4WwuiZSBSB6QWJiqI474olKHJpXRxFki/g0BwCLn2QfhOx7cxZqXVVbGXE0qSDyhwN/0Mz+k/3aN2cBORRPCS9mRWYobg1zBFFaKZ7P9YtTz8iLRXonTK7xmVjD2SXoyNJk2Zo=
-  on:
-    tags: true
-    repo: tylerwmarrs/mass-ts
-    python: 3.6
