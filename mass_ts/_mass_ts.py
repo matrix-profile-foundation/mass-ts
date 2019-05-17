@@ -194,19 +194,19 @@ def mass(ts, query, normalize_query=True, corr_coef=False):
     n = len(ts)
     m = len(query)
     x = np.append(ts, np.zeros([1, n]))
-    query = np.append(np.flipud(query), np.zeros([1, m]))
+    y = np.append(np.flipud(query), np.zeros([1, 2 * n - m]))
     
-    X = np.fft.fft(ts)
-    Y = np.fft.fft(query)
+    X = np.fft.fft(x)
+    Y = np.fft.fft(y)
     Y.resize(X.shape)
     Z = X * Y
     z = np.fft.ifft(Z)
     
-    sum_query = np.sum(query)
-    sum_query2 = np.sum(query**2)
+    sumy = np.sum(y)
+    sumy2 = np.sum(y ** 2)
     
     cum_sumx = np.cumsum(x)
-    cum_sumx2 = np.cumsum(x**2)
+    cum_sumx2 = np.cumsum(x ** 2)
     
     sumx2 = cum_sumx2[m:n] - cum_sumx2[0:n-m]
     sumx = cum_sumx[m:n] - cum_sumx[0:n-m]
@@ -215,8 +215,8 @@ def mass(ts, query, normalize_query=True, corr_coef=False):
     sigmax = np.sqrt(sigmax2)
     
     dist = (sumx2 - 2 * sumx * meanx + m * (meanx ** 2)) \
-        / sigmax2 - 2 * (z[m:n] - sum_query * meanx) \
-        / sigmax + sum_query2
+        / sigmax2 - 2 * (z[m:n] - sumy * meanx) \
+        / sigmax + sumy2
     dist = np.absolute(np.sqrt(dist))
     
     if corr_coef:
@@ -225,7 +225,7 @@ def mass(ts, query, normalize_query=True, corr_coef=False):
     return dist
 
 
-def mass2(ts, query, corr_coef=False):
+def mass2(ts, query):
     """
     Compute the distance profile for the given query over the given time 
     series. Optionally, the correlation coefficient can be returned.
@@ -236,8 +236,6 @@ def mass2(ts, query, corr_coef=False):
         The array to create a rolling window on.
     query : array_like
         The query.
-    corr_coef : bool, default False
-        Optionally return the correlation coef.
 
     Returns
     -------
@@ -254,27 +252,28 @@ def mass2(ts, query, corr_coef=False):
 
     n = len(ts)
     m = len(query)
-    ts = np.append(ts, np.zeros([1, n]))
+    x = ts
+    y = query
+
+    meany = np.mean(y)
+    sigmay = np.std(y)
     
-    meanquery = np.mean(query)
-    sigmaquery = np.std(query)
+    meanx = _moving_average(x, m)
+    meanx = np.append(np.ones([1, len(x) - len(meanx)]), meanx)
+    sigmax = _moving_std(x, m)
+    sigmax = np.append(np.zeros([1, len(x) - len(sigmax)]), sigmax)
     
-    meanx = _moving_average(ts, m-1)
-    sigmax = _moving_std(ts, m-1)
+    y = np.append(np.flip(y), np.zeros([1, n - m]))
     
-    query = np.append(np.flipud(query), np.zeros([1, m]))
-    
-    X = np.fft.fft(ts)
-    Y = np.fft.fft(query)
+    X = np.fft.fft(x)
+    Y = np.fft.fft(y)
     Y.resize(X.shape)
     Z = X * Y
     z = np.fft.ifft(Z)
     
-    dist = 2 * (m - (z[m:n] - m * meanx[m:n] * meanquery) / 
-                    (sigmax[m:n] * sigmaquery))
-    
-    if corr_coef:
-        return 1 - np.absolute(dist) / (2 * m)
+    dist = 2 * (m - (z[m - 1:n] - m * meanx[m - 1:n] * meany) / 
+                    (sigmax[m - 1:n] * sigmay))
+    dist = np.sqrt(dist)
     
     return dist
 
@@ -343,7 +342,6 @@ def mass3(ts, query, pieces):
             
         d = 2 * (m-(z[m - 1:k] - m * meanx[m + j - 1:j + k] * meany) /
                    (sigmax[m + j - 1:j + k] * sigmay))
-        d = np.real(d)
         d = np.sqrt(d)
         dist = np.append(dist, d)
    
@@ -360,7 +358,6 @@ def mass3(ts, query, pieces):
         d = 2 * (m-(z[m - 1:k] - m * meanx[j + m - 1:n - 1] * meany) /
                  (sigmax[j + m - 1:n - 1] * sigmay))
        
-        d = np.real(d)
         d = np.sqrt(d)
         dist = np.append(dist, d)
     
