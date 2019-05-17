@@ -124,7 +124,7 @@ def test_moving_std():
 
 
 def test_mass():
-    ts = np.array([1,1, 1, 2, 1, 1, 4, 5])
+    ts = np.array([1, 1, 1, 2, 1, 1, 4, 5])
     query = np.array([2, 1, 1, 4])
     actual = mts.mass(ts, query)
     desired = np.array([
@@ -135,7 +135,7 @@ def test_mass():
 
 
 def test_mass_corr_coef():
-    ts = np.array([1,1, 1, 2, 1, 1, 4, 5])
+    ts = np.array([1, 1, 1, 2, 1, 1, 4, 5])
     query = np.array([2, 1, 1, 4])
     actual = mts.mass(ts, query, corr_coef=True)
     desired = np.array([0.57113456, 0.57113456, 1., 0.768608])
@@ -144,7 +144,7 @@ def test_mass_corr_coef():
 
 
 def test_mass2():
-    ts = np.array([1,1, 1, 2, 1, 1, 4, 5])
+    ts = np.array([1, 1, 1, 2, 1, 1, 4, 5])
     query = np.array([2, 1, 1, 4])
     actual = mts.mass2(ts, query)
     desired = np.array([
@@ -156,9 +156,25 @@ def test_mass2():
 
 
 def test_mass2_corr_coef():
-    ts = np.array([1,1, 1, 2, 1, 1, 4, 5])
+    ts = np.array([1, 1, 1, 2, 1, 1, 4, 5])
     query = np.array([2, 1, 1, 4])
     actual = mts.mass2(ts, query, corr_coef=True)
     desired = np.array([-1.24060434, -2.41032728, -0.98051644,  0.15619717])
     
     np.testing.assert_almost_equal(actual, desired)
+
+
+def test_mass3():
+    ts = np.array([1, 1, 1, 2, 1, 1, 4, 5])
+    query = np.array([2, 1, 1, 4])
+    pieces = 8
+    distances = mts.mass3(ts, query, pieces)
+    desired = np.array([
+        0.67640791,
+        3.43092352,
+        3.43092352,
+        0.,
+        1.85113597
+    ])
+
+    np.testing.assert_almost_equal(distances, desired)

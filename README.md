@@ -8,6 +8,7 @@ MASS
 
 MASS (Mueen's Algorithm for Similarity Search) Implementations
 
+MASS is the fundamental algorithm that the matrix profile algorithm is built on top of. It allows you to search a time series for a smaller series. The result is an array of distances. To find the "closest" section of a time series to yours, simply find the minimum distance(s).
 
 * Free software: Apache Software License 2.0
 
@@ -15,9 +16,9 @@ MASS (Mueen's Algorithm for Similarity Search) Implementations
 Features
 --------
 
-* MASS
-* MASS2
-* MASS3 - TODO
+* MASS - the first implementation of MASS
+* MASS2 - the second implementation of MASS that is significantly faster. Typically this is the one you will use.
+* MASS3 - a piecewise version of MASS2 that can be tuned to your hardware. Generally this is used to search very large time series.
 
 Example Usage
 -------------
@@ -29,7 +30,17 @@ import mass_ts as mts
 ts = np.loadtxt('ts.txt')
 query = np.loadtxt('query.txt')
 
+# mass
+distances = mts.mass(ts, query)
+
+# mass2
 distances = mts.mass2(ts, query)
+
+# mass3
+distances = mts.mass3(ts, query, 256)
+
+# find minimum distance
+min_idx = np.argmin(distances)
 ```
 
 Citations
