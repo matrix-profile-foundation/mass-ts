@@ -27,6 +27,8 @@ pip install mass-ts
 
 Example Usage
 -------------
+A dedicated repository for practical examples can be found at the [mass-ts-examples repository](https://github.com/tylerwmarrs/mass-ts-examples).
+
 ```python
 
 import numpy as np
