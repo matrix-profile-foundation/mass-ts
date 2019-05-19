@@ -18,6 +18,7 @@ Features
 * MASS - the first implementation of MASS
 * MASS2 - the second implementation of MASS that is significantly faster. Typically this is the one you will use.
 * MASS3 - a piecewise version of MASS2 that can be tuned to your hardware. Generally this is used to search very large time series.
+* MASS2_batch - a batch version of MASS2 that reduces overall memory usage, provides parallelization and enables you to find top K number of matches within the time series. The goal of using this implementation is for very large time series similarity search.
 
 Installation
 ------------
@@ -45,6 +46,17 @@ distances = mts.mass2(ts, query)
 
 # mass3
 distances = mts.mass3(ts, query, 256)
+
+# mass2_batch
+# start a multi-threaded batch job with all cpu cores and give me the top 5 matches.
+# note that batch_size partitions your time series into a subsequence similarity search.
+# even for large time series in single threaded mode, this is much more memory efficient than
+# MASS2 on its own.
+batch_size = 10000
+top_matches = 5
+n_jobs = -1
+indices, distances = mts.mass2_batch(ts, query, batch_size, 
+    top_matches=top_matches, n_jobs=n_jobs)
 
 # find minimum distance
 min_idx = np.argmin(distances)
