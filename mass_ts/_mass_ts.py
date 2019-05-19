@@ -9,153 +9,7 @@ range = getattr(__builtins__, 'xrange', range)
 
 import numpy as np
 
-
-def _is_array_like(a):
-    """
-    Helper function to determine if a value is array like.
-
-    a : obj
-        Object to test.
-
-    Returns
-    -------
-    True or false respectively.
-    """
-    return isinstance(a, (list, tuple, np.ndarray))
-
-
-def _is_one_dimensional(a):
-    """
-    Helper function to determine if value is one dimensional.
-
-    a : array_like
-        Object to test.
-
-    Returns
-    -------
-    True or false respectively.
-    """
-    return a.ndim == 1
-
-
-def _to_np_array(a):
-    """
-    Helper function to convert tuple or list to np.ndarray.
-
-    a : Tuple, list or np.ndarray
-        The object to transform.
-
-    Returns
-    -------
-    The np.ndarray.
-
-    Raises
-    ------
-    ValueError
-        If a is not a valid type.
-    """
-    if not _is_array_like(a):
-        raise ValueError('Unable to convert to np.ndarray!')
-
-    return np.array(a)
-
-
-def _rolling_window(a, window):
-    """
-    Provides a rolling window on a numpy array given an array and window size.
-
-    Parameters
-    ----------
-    a : array_like
-        The array to create a rolling window on.
-    window : int
-        The window size.
-
-    Returns
-    -------
-    Strided array for computation.
-    """
-    shape = a.shape[:-1] + (a.shape[-1] - window + 1, window)
-    strides = a.strides + (a.strides[-1],)
-    
-    return np.lib.stride_tricks.as_strided(a, shape=shape, strides=strides)
-
-
-def _moving_average(a, window=3):
-    """
-    Computes the moving average over an array given a window size.
-
-    Parameters
-    ----------
-    a : array_like
-        The array to compute the moving average on.
-    window : int
-        The window size.
-
-    Returns
-    -------
-    The moving average over the array.
-    """
-    return np.mean(_rolling_window(a, window), -1)
-
-
-def _moving_std(a, window=3):
-    """
-    Computes the moving std. over an array given a window size.
-
-    Parameters
-    ----------
-    a : array_like
-        The array to compute the moving std. on.
-    window : int
-        The window size.
-
-    Returns
-    -------
-    The moving std. over the array.
-    """
-    return np.std(_rolling_window(a, window), -1)
-
-
-def _precheck_series_and_query(ts, query):
-    """
-    Helper function to ensure we have 1d time series and query.
-
-    Parameters
-    ----------
-    ts : array_like
-        The array to create a rolling window on.
-    query : array_like
-        The query.
-
-    Returns
-    -------
-    (np.array, np.array) - The ts and query respectively.
-
-    Raises
-    ------
-    ValueError
-        If ts is not a list or np.array.
-        If query is not a list or np.array.
-        If ts or query is not one dimensional.
-    """
-    try:
-        ts = _to_np_array(ts)
-    except ValueError:
-        raise ValueError('Invalid ts value given. Must be array_like!')
-
-    try:
-        query = _to_np_array(query)
-    except ValueError:
-        raise ValueError('Invalid query value given. Must be array_like!')
-
-    if not _is_one_dimensional(ts):
-        raise ValueError('ts must be one dimensional!')
-
-    if not _is_one_dimensional(query):
-        raise ValueError('query must be one dimensional!')
-
-    return (ts, query)
+from mass_ts import core as mtscore
 
 
 def mass(ts, query, normalize_query=True, corr_coef=False):
@@ -186,7 +40,7 @@ def mass(ts, query, normalize_query=True, corr_coef=False):
         If query is not a list or np.array.
         If ts or query is not one dimensional.
     """
-    ts, query = _precheck_series_and_query(ts, query)
+    ts, query = mtscore.precheck_series_and_query(ts, query)
 
     if normalize_query:
         query = (query - np.mean(query)) / np.std(query)
@@ -248,7 +102,7 @@ def mass2(ts, query):
         If query is not a list or np.array.
         If ts or query is not one dimensional.
     """
-    ts, query = _precheck_series_and_query(ts, query)
+    ts, query = mtscore.precheck_series_and_query(ts, query)
 
     n = len(ts)
     m = len(query)
@@ -258,9 +112,9 @@ def mass2(ts, query):
     meany = np.mean(y)
     sigmay = np.std(y)
     
-    meanx = _moving_average(x, m)
+    meanx = mtscore.moving_average(x, m)
     meanx = np.append(np.ones([1, len(x) - len(meanx)]), meanx)
-    sigmax = _moving_std(x, m)
+    sigmax = mtscore.moving_std(x, m)
     sigmax = np.append(np.zeros([1, len(x) - len(sigmax)]), sigmax)
     
     y = np.append(np.flip(y), np.zeros([1, n - m]))
@@ -305,7 +159,7 @@ def mass3(ts, query, pieces):
         If ts or query is not one dimensional.
         If pieces is less than the length of the query.
     """
-    ts, query = _precheck_series_and_query(ts, query)
+    ts, query = mtscore.precheck_series_and_query(ts, query)
 
     m = len(query)
     
@@ -321,9 +175,9 @@ def mass3(ts, query, pieces):
     meany = np.mean(query)
     sigmay = np.std(query)
     
-    meanx = _moving_average(x, m)
+    meanx = mtscore.moving_average(x, m)
     meanx = np.append(np.ones([1, len(x) - len(meanx)]), meanx)
-    sigmax = _moving_std(x, m)
+    sigmax = mtscore.moving_std(x, m)
     sigmax = np.append(np.zeros([1, len(x) - len(sigmax)]), sigmax)
     
     # reverse the query and append zeros
