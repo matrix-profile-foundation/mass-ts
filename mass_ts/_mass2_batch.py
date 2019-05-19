@@ -13,7 +13,7 @@ range = getattr(__builtins__, 'xrange', range)
 # end of py2 compatability boilerplate
 
 
-from multiprocessing import Pool, cpu_count
+from multiprocessing import cpu_count
 
 import numpy as np
 
@@ -154,7 +154,7 @@ def mass2_batch(ts, query, batch_size, top_matches=3, n_jobs=1):
     
     # determine if we are multiprocessing or not based on cpu_count
     if n_jobs > 1:
-        with Pool(processes=n_jobs) as pool:
+        with mtscore.mp_pool()(processes=n_jobs) as pool:
             matches = pool.map(
                 _min_subsequence_distance,
                 _batch_job_generator(ts, query, indices, batch_size)

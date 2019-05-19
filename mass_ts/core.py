@@ -7,7 +7,32 @@ from __future__ import unicode_literals
 range = getattr(__builtins__, 'xrange', range)
 # end of py2 compatability boilerplate
 
+import multiprocessing
+import sys
+
 import numpy as np
+
+
+def mp_pool():
+    """
+    Utility function to get the appropriate multiprocessing
+    handler for Python 2 and 3.
+    """
+    ctxt = None
+    if sys.version_info[0] == 2:
+        from contextlib import contextmanager
+
+        @contextmanager
+        def multiprocessing_context(*args, **kwargs):
+            pool = multiprocessing.Pool(*args, **kwargs)
+            yield pool
+            pool.terminate()
+
+        ctxt = multiprocessing_context
+    else:
+        ctxt = multiprocessing.Pool
+
+    return ctxt
 
 
 def is_array_like(a):
