@@ -15,9 +15,13 @@ Free software: Apache Software License 2.0
 Features
 --------
 
+**Original Author's Algorithms**
 * MASS - the first implementation of MASS
 * MASS2 - the second implementation of MASS that is significantly faster. Typically this is the one you will use.
 * MASS3 - a piecewise version of MASS2 that can be tuned to your hardware. Generally this is used to search very large time series.
+* MASS_weighted - TODO
+
+**Library Specific Algorithms**
 * MASS2_batch - a batch version of MASS2 that reduces overall memory usage, provides parallelization and enables you to find top K number of matches within the time series. The goal of using this implementation is for very large time series similarity search.
 
 Installation
