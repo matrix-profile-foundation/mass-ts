@@ -5,11 +5,11 @@ MASS (Mueen's Algorithm for Similarity Search)
 [<img src="https://img.shields.io/travis/tylerwmarrs/mass-ts.svg">](https://travis-ci.org/tylerwmarrs/mass-ts)
 [<img src="https://readthedocs.org/projects/mass-ts/badge/?version=latest">](https://mass-ts.readthedocs.io/en/latest/?badge=latest)
 
-MASS is the fundamental algorithm that the matrix profile algorithm is built on top of. It allows you to search a time series for a smaller series. The result is an array of distances. To find the "closest" section of a time series to yours, simply find the minimum distance(s).
+MASS allows you to **search a time series for a subquery** resulting in an array of distances. These array of distances enable you to **identify similar or dissimilar subsequences** compared to your query. At its core, MASS computes **Euclidean distances under z-normalization** in an efficient manner and is **domain agnostic** in nature. It is the **fundamental algorithm that the matrix profile algorithm** is built on top of. 
 
 mass-ts is a python 2 and 3 compatible library.
 
-* Free software: Apache Software License 2.0
+Free software: Apache Software License 2.0
 
 
 Features
