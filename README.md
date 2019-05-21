@@ -2,6 +2,7 @@
 
 Introduction
 ------------
+[![Tweet](https://img.shields.io/twitter/url/http/shields.io.svg?style=social)](https://twitter.com/intent/tweet?text=Check%20out%20mass-ts!%20MASS%20implementations%20in%20Python%202%20and%203.%20Free%20and%20open%20source.&url=https://github.com/tylerwmarrs/mass-ts&via=tylerwmarrs&hashtags=datascience,datamining,timeseries)
 
 [<img src="https://img.shields.io/pypi/v/mass_ts.svg">](https://pypi.python.org/pypi/mass_ts)
 [<img src="https://img.shields.io/travis/tylerwmarrs/mass-ts.svg">](https://travis-ci.org/tylerwmarrs/mass-ts)
