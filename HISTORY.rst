@@ -18,3 +18,9 @@ History
 ------------------
 
 * mass2_batch release for efficient large time series searching.
+
+0.1.3 (2019-05-19)
+------------------
+
+* top_k_motifs - find the top k similar subsequences given a distance profile.
+* top_k_discords - find the top k dissimilar subsequences given a distance profile.

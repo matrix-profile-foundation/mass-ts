@@ -5,9 +5,12 @@ MASS (Mueen's Algorithm for Similarity Search)
 ==============================================
 
 Provides
-	1. MASS - the original implementation
-	2. MASS2 - a quicker version of MASS
-	3. MASS3 - a piecewise version of MASS2
+    1. MASS - the original implementation
+    2. MASS2 - a quicker version of MASS
+    3. MASS3 - a piecewise version of MASS2
+    4. MASS2_batch - a batch implementaiton of mass2
+    5. top_k_motifs - find top k motifs
+    6. top_k_discords - find top k discords
 
 Example Usage
 -------------
@@ -24,7 +27,7 @@ Abdullah Mueen, Yan Zhu, Michael Yeh, Kaveh Kamgar, Krishnamurthy Viswanathan, C
 
 __author__ = """Tyler Marrs"""
 __email__ = 'tylerwmarrs@gmail.com'
-__version__ = '0.1.2'
+__version__ = '0.1.3'
 
 
 from mass_ts._mass_ts import mass, mass2, mass3
