@@ -1,4 +1,3 @@
-[docs/images/stumpy_logo_small.png
 <div style="text-align:center"><img src="docs/mass-logo.png" /></div>
 
 MASS (Mueen's Algorithm for Similarity Search)
