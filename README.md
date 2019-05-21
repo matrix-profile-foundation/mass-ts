@@ -1,3 +1,6 @@
+[docs/images/stumpy_logo_small.png
+<div style="text-align:center"><img src="docs/mass-logo.png" /></div>
+
 MASS (Mueen's Algorithm for Similarity Search)
 ----------------------------------------------
 
@@ -23,6 +26,8 @@ Features
 
 **Library Specific Algorithms**
 * MASS2_batch - a batch version of MASS2 that reduces overall memory usage, provides parallelization and enables you to find top K number of matches within the time series. The goal of using this implementation is for very large time series similarity search.
+* top_k_motifs - find the top K number of similar subsequences to your given query. It returns the starting index of the subsequence.
+* top_k_discords - find the top K number of dissimilar subsequences to your given query. It returns the starting index of the subsequence.
 
 Installation
 ------------
@@ -64,6 +69,16 @@ indices, distances = mts.mass2_batch(ts, query, batch_size,
 
 # find minimum distance
 min_idx = np.argmin(distances)
+
+# find top 4 motif starting indices
+k = 4
+exclusion_zone = 25
+top_motifs = mts.top_k_motifs(distances, k, exclusion_zone)
+
+# find top 4 discord starting indices
+k = 4
+exclusion_zone = 25
+top_discords = mts.top_k_discords(distances, k, exclusion_zone)
 ```
 
 Citations
