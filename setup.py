@@ -35,6 +35,9 @@ setup(
     ],
     description="MASS (Mueen's Algorithm for Similarity Search)",
     install_requires=requirements,
+    extras_require={
+        'gpu':  ['cupy-cuda101==6.2.0',],
+    },
     license="Apache Software License 2.0",
     long_description=readme + '\n\n' + history,
     long_description_content_type='text/markdown',

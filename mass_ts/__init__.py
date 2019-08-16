@@ -11,6 +11,7 @@ Provides
     4. MASS2_batch - a batch implementaiton of mass2
     5. top_k_motifs - find top k motifs
     6. top_k_discords - find top k discords
+    7. MASS2_GPU - a gpu powered version of MASS2
 
 Example Usage
 -------------
@@ -30,6 +31,6 @@ __email__ = 'tylerwmarrs@gmail.com'
 __version__ = '0.1.3'
 
 
-from mass_ts._mass_ts import mass, mass2, mass3
+from mass_ts._mass_ts import mass, mass2, mass3, mass2_gpu
 from mass_ts._mass2_batch import mass2_batch
 from mass_ts._top_k import top_k_motifs, top_k_discords

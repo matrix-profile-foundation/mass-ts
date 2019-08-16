@@ -9,6 +9,12 @@ range = getattr(__builtins__, 'xrange', range)
 
 import numpy as np
 
+try:
+    import cupy as cp
+except:
+    raise RuntimeWarning(
+        'GPU support will not work. You must pip install mass-ts[gpu].')
+
 from mass_ts import core as mtscore
 
 
@@ -77,6 +83,66 @@ def mass(ts, query, normalize_query=True, corr_coef=False):
         return 1 - np.absolute(dist) / (2 * m)
     
     return dist
+
+
+def mass2_gpu(ts, query):
+    """
+    Compute the distance profile for the given query over the given time 
+    series. This require cupy to be installed.
+
+    Parameters
+    ----------
+    ts : array_like
+        The array to create a rolling window on.
+    query : array_like
+        The query.
+
+    Returns
+    -------
+    An array of distances.
+
+    Raises
+    ------
+    ValueError
+        If ts is not a list or np.array.
+        If query is not a list or np.array.
+        If ts or query is not one dimensional.
+    """
+    def moving_mean_std_gpu(a, w):
+        s = cp.concatenate([cp.array([0]), cp.cumsum(a)])
+        sSq = cp.concatenate([cp.array([0]), cp.cumsum(a ** 2)])
+        segSum = s[w:] - s[:-w]
+        segSumSq = sSq[w:] -sSq[:-w]
+    
+        movmean = segSum / w
+        movstd = cp.sqrt(segSumSq / w - (segSum / w) ** 2)
+    
+        return (movmean, movstd)
+
+    x = cp.asarray(ts)
+    y = cp.asarray(query)
+    n = x.size
+    m = y.size
+
+    meany = cp.mean(y)
+    sigmay = cp.std(y)
+    
+    meanx, sigmax = moving_mean_std_gpu(x, m)
+    meanx = cp.concatenate([cp.ones(n - meanx.size), meanx])
+    sigmax = cp.concatenate([cp.zeros(n - sigmax.size), sigmax])
+    
+    y = cp.concatenate((cp.flip(y, axis=0), cp.zeros(n - m)))
+    
+    X = cp.fft.fft(x)
+    Y = cp.fft.fft(y)
+    Z = X * Y
+    z = cp.fft.ifft(Z)
+    
+    dist = 2 * (m - (z[m - 1:n] - m * meanx[m - 1:n] * meany) / 
+                    (sigmax[m - 1:n] * sigmay))
+    dist = cp.sqrt(dist)
+
+    return cp.asnumpy(dist)
 
 
 def mass2(ts, query):
