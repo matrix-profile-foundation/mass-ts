@@ -7,12 +7,14 @@ from __future__ import unicode_literals
 range = getattr(__builtins__, 'xrange', range)
 # end of py2 compatability boilerplate
 
+import warnings
+
 import numpy as np
 
 try:
     import cupy as cp
-except:
-    raise RuntimeWarning(
+except ModuleNotFoundError:
+    warnings.warn(
         'GPU support will not work. You must pip install mass-ts[gpu].')
 
 from mass_ts import core as mtscore
