@@ -27,11 +27,20 @@ Features
 * MASS2_batch - a batch version of MASS2 that reduces overall memory usage, provides parallelization and enables you to find top K number of matches within the time series. The goal of using this implementation is for very large time series similarity search.
 * top_k_motifs - find the top K number of similar subsequences to your given query. It returns the starting index of the subsequence.
 * top_k_discords - find the top K number of dissimilar subsequences to your given query. It returns the starting index of the subsequence.
+* MASS2_gpu - a GPU implementation of MASS2 leveraging the Python library CuPy.
 
 Installation
 ------------
 ```
 pip install mass-ts
+```
+
+GPU Support
+-----------
+Please follow the [installation guide for CuPy](https://docs-cupy.chainer.org/en/stable/install.html). It covers what drivers and environmental dependencies are required. Once you are finished there, you can install GPU support for the algorithms.
+
+```
+pip install mass-ts[gpu]
 ```
 
 Example Usage
@@ -54,6 +63,9 @@ distances = mts.mass2(ts, query)
 
 # mass3
 distances = mts.mass3(ts, query, 256)
+
+# mass2_gpu
+distances = mts.mass2_gpu(ts, query)
 
 # mass2_batch
 # start a multi-threaded batch job with all cpu cores and give me the top 5 matches.
