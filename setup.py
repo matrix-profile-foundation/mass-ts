@@ -48,7 +48,7 @@ setup(
     setup_requires=setup_requirements,
     test_suite='tests',
     tests_require=test_requirements,
-    url='https://github.com/tylerwmarrs/mass_ts',
-    version='0.1.3',
+    url='https://github.com/matrix-profile-foundation/mass_ts',
+    version='0.1.4',
     zip_safe=False,
 )

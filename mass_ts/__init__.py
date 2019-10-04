@@ -28,7 +28,7 @@ Abdullah Mueen, Yan Zhu, Michael Yeh, Kaveh Kamgar, Krishnamurthy Viswanathan, C
 
 __author__ = """Tyler Marrs"""
 __email__ = 'tylerwmarrs@gmail.com'
-__version__ = '0.1.3'
+__version__ = '0.1.4'
 
 
 from mass_ts._mass_ts import mass, mass2, mass3, mass2_gpu

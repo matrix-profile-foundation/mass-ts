@@ -24,3 +24,8 @@ History
 
 * top_k_motifs - find the top k similar subsequences given a distance profile.
 * top_k_discords - find the top k dissimilar subsequences given a distance profile.
+
+0.1.4 (2019-10-04)
+------------------
+
+* add GPU implementation of MASS2 - mass2_gpu.
